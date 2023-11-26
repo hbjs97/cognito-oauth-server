@@ -53,8 +53,23 @@ app.post('/authenticate', async (req, res) => {
 
     console.log('userInfo', userInfo);
 
+    const userId = userInfo.sub;
     const userEmail = userInfo.email;
+    // 외부 인증 제공자 정보 확인
+    const issuer = userInfo.iss; // 발급자 정보 확인
+    let externalProvider = null;
 
+    // 'identities' 필드가 있는 경우, 외부 인증 제공자 정보 추출
+    if (userInfo.identities) {
+      const identities = userInfo.identities;
+      if (Array.isArray(identities) && identities.length > 0) {
+        externalProvider = identities[0].providerName; // 첫 번째 인증 제공자 이름 사용
+      }
+    }
+
+    console.log('Issuer:', issuer);
+    console.log('External Provider:', externalProvider);
+    console.log('userId', userId);
     console.log('userEmail', userEmail);
 
     res.json({ message: 'User authenticated', email: userEmail });
