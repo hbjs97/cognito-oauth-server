@@ -7,7 +7,7 @@ dotenv.config();
 
 const COGNITO_CLIENT_ID = process.env.COGNITO_CLIENT_ID;
 const COGNITO_DOMAIN = process.env.COGNITO_DOMAIN;
-const REDIRECT_URI = 'http://localhost:3000';
+const REDIRECT_URI = process.env.REDIRECT_URI;
 
 app.use(express.json());
 app.use(cors());
